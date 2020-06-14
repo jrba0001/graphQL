@@ -2,6 +2,7 @@ const Usuario = require('../models/Usuario');
 const Producto = require('../models/Producto');
 const Cliente = require('../models/Cliente');
 const Pedido = require('../models/Pedido');
+
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: 'variables.env' });
@@ -17,9 +18,8 @@ const crearToken = (usuario, secreta, expiresIn) => {
 // Resolvers
 const resolvers = {
     Query: {
-        obtenerUsuario: async (_, {token}, ctx) => {
-            const usuarioId = await jwt.verify(token,process.env.SECRETA)
-            return usuarioId;
+        obtenerUsuario: async (_, {}, ctx) => {
+            return ctx.usuario;
         }, 
         obtenerProductos: async () => {
             try {
@@ -251,7 +251,6 @@ const resolvers = {
         nuevoCliente: async (_, { input }, ctx) => {
 
             console.log(ctx);
-            console.log('por aqui')
 
             const { email } = input
             // Verificar si el cliente ya esta registrado

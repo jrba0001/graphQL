@@ -1,28 +1,27 @@
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 
 const ProductosSchema = mongoose.Schema({
-    nombre:{
-        type:String,
-        require:true,
-        trim:true
-
+    nombre: {
+        type: String,
+        required: true,
+        trim: true
     },
-    existencia:{
-        type:Number,
-        require:true
-
-    },
-    precio:{
+    existencia: {
         type: Number,
-        require:true,
-        trim:true
-
+        required: true,
+        trim: true
     },
-    creado:{
-        type:Date,
-        default:Date.now()
-
+    precio: {
+        type: Number,
+        required: true,
+        trim: true
+    }, 
+    creado: {
+        type: Date,
+        default: Date.now() 
     }
 });
 
-module.exports = mongoose.model('Producto', ProductosSchema)
+ProductosSchema.index({ nombre: 'text' });
+
+module.exports = mongoose.model('Producto', ProductosSchema);
